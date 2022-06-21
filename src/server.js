@@ -3,8 +3,8 @@ const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 var http = require('http');
 var fs = require('fs');
 
-const port = 3000
-const playlistFileExtension = 'm3u8'
+const port = 3000;
+const playlistFileExtension = 'm3u8';
 let resourceUrl = '';
 let streamIsDownloaded = false;
 
@@ -41,12 +41,13 @@ http.createServer(function (request, response) {
     {
         let filePath = '.' + request.url;
         let filePathSplits = filePath.split('.');
-        let file_extension = filePathSplits[filePathSplits.length-1];
+        let fileExtension = filePathSplits[filePathSplits.length-1];
         let start, end;
-        if (file_extension == playlistFileExtension)
+        let fileType = 'MANIFEST';
+        if (fileExtension == playlistFileExtension)
         {
             start = Date.now();
-            console.log('[IN] ' + resourceUrl)
+            console.log(`[IN][${fileType}] ${resourceUrl}`)
         }
         
         fs.readFile(filePath, function(error, content) {
@@ -65,10 +66,10 @@ http.createServer(function (request, response) {
             }
             else {
                 response.end(content, 'utf-8');
-                if (file_extension == playlistFileExtension)
+                if (fileExtension == playlistFileExtension)
                 {
                     end = Date.now();
-                    console.log(`[OUT] ${resourceUrl} (${end-start}ms)`);
+                    console.log(`[OUT][${fileType}] ${resourceUrl} (${end-start}ms)`);
                 }
             }
         });
