@@ -10,12 +10,11 @@ const extractSegmentNumber = (pathToLocalSegment) => {
 
 const getFilepathAsRemote = (remoteUrl, localUrl) => {
   let localUrlSplits = localUrl.split('.');
-  let fileExtension = localUrlSplits[localUrlSplits.length-1];
-  if (fileExtension == playlistFileExtension)
-  {
+  let fileExtension = localUrlSplits[localUrlSplits.length - 1];
+  if (fileExtension == playlistFileExtension) {
     return remoteUrl;
   }
-  return remoteUrl.substring(0, remoteUrl.length-(playlistFileExtension.length+1)) + '/' + extractSegmentNumber(localUrl) + '.ts'; 
+  return remoteUrl.substring(0, remoteUrl.length - (playlistFileExtension.length + 1)) + '/' + extractSegmentNumber(localUrl) + '.ts';
 }
 
 exports.getFilepathAsRemote = getFilepathAsRemote;
