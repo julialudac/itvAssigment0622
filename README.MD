@@ -12,7 +12,6 @@ The effect is that VLC will first target the playlist/manifest 'output.m3u8', th
 
 
 # TODO
-* Output for segments, exercise 2
 * Exercise 2 track switch
 * Exercise 3
 * Do it in C++

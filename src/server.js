@@ -58,16 +58,12 @@ getResourceUrlFromArgument();
 generatePlaylistAndSegmentFiles();
 http.createServer(function (request, response) {
     if (streamIsDownloaded) {
-        let filepathAsRemote = utils.getFilepathAsRemote(resourceUrl, request.url);
-
-        let filePath = '.' + request.url;
-        let filePathSplits = filePath.split('.');
-        let fileExtension = filePathSplits[filePathSplits.length - 1];
+        let fileAsRemote = utils.getFilepathAsRemote(resourceUrl, request.url);
         let start, end;
-        let fileType = 'MANIFEST';
         start = Date.now();
-        console.log(`[IN][${fileType}] ${filepathAsRemote}`)
-
+        console.log(`[IN][${fileAsRemote.type}] ${fileAsRemote.remotePath}`)
+        
+        let filePath = '.' + request.url;
         fs.readFile(filePath, function (error, content) {
             response.writeHead(200, { 'Access-Control-Allow-Origin': '*' });
             if (error) {
@@ -85,7 +81,7 @@ http.createServer(function (request, response) {
             else {
                 response.end(content, 'utf-8');
                 end = Date.now();
-                console.log(`[OUT][${fileType}] ${filepathAsRemote} (${end - start}ms)`);
+                console.log(`[OUT][${fileAsRemote.type}] ${fileAsRemote.remotePath} (${end - start}ms)`);
             }
         });
     }
